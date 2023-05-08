@@ -44,8 +44,6 @@
         "rm /var/lib/update-notifier/fsck-at-reboot",
         "find /var/log -type f -exec rm {} +",
         "rm -r /tmp/* /tmp/.*-unix /var/tmp/*",
-        "for i in group gshadow passwd shadow subuid subgid; do mv /etc/$i- /etc/$i; done",
-        "rm -r /home/packer",
         "/bin/sync",
         "/sbin/fstrim -v /"
       ],
