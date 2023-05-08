@@ -22,8 +22,8 @@
   ],
   "provisioners": [
     {
-      "inline": [
-        "echo Your steps go here."
+      "scripts": [
+        "install_docker.sh"
       ],
       "type": "shell"
     },
