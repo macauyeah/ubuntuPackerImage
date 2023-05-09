@@ -22,6 +22,19 @@
   ],
   "provisioners": [
     {
+      "type" : "file",
+      "source" : "sources.list",
+      "destination" : "/tmp/sources.list"
+    },
+    {
+      "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'",
+      "inline": [
+        "cp /tmp/sources.list /etc/apt/sources.list"
+      ],
+      "remote_folder": "/tmp",
+      "type": "shell"
+    },
+    {
       "scripts": [
         "install_docker.sh"
       ],
