@@ -1,0 +1,4 @@
+apt:
+  primary:
+    - arches: [default]
+      uri: http://mo.archive.ubuntu.com/ubuntu/

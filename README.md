@@ -45,3 +45,60 @@ qemu-system-x86_64  \
 packer build template.json
 multipass launch file://$PWD/output-qemu/packer-qemu
 ```
+
+## Notes about current template.json.
+Current packer template shows that how to install docker with defualt ubuntu image.
+
+From line 24 to 42.
+```
+    {
+      "type" : "file",
+      "source" : "sources.list",
+      "destination" : "/tmp/sources.list"
+    },
+    {
+      "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'",
+      "inline": [
+        "cp /tmp/sources.list /etc/apt/sources.list"
+      ],
+      "remote_folder": "/tmp",
+      "type": "shell"
+    },
+    {
+      "scripts": [
+        "install_docker.sh"
+      ],
+      "type": "shell"
+    },
+```
+
+It replaces defualt sources.list so that you could change mirror to your specific location. This could help to speedup apt-get update command during docker install process. But your mirror would leave in the image you build.
+
+From line 43 to 65
+```
+    {
+      "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'",
+      "inline": [
+        "/usr/bin/apt-get clean",
+        "rm -r /etc/netplan/50-cloud-init.yaml /etc/ssh/ssh_host* /etc/sudoers.d/90-cloud-init-users",
+        "/usr/bin/truncate --size 0 /etc/machine-id",
+        "/usr/bin/gawk -i inplace '/PasswordAuthentication/ { gsub(/yes/, \"no\") }; { print }' /etc/ssh/sshd_config",
+        "rm -r /root/.ssh",
+        "rm /snap/README",
+        "find /usr/share/netplan -name __pycache__ -exec rm -r {} +",
+        "rm /var/cache/pollinate/seeded /var/cache/motd-news",
+        "rm -r /var/cache/snapd/*",
+        "rm -r /var/lib/cloud /var/lib/dbus/machine-id /var/lib/private /var/lib/systemd/timers /var/lib/systemd/timesync /var/lib/systemd/random-seed",
+        "rm /var/lib/ubuntu-release-upgrader/release-upgrade-available",
+        "rm /var/lib/update-notifier/fsck-at-reboot",
+        "find /var/log -type f -exec rm {} +",
+        "rm -r /tmp/* /tmp/.*-unix /var/tmp/*",
+        "/bin/sync",
+        "/sbin/fstrim -v /"
+      ],
+      "remote_folder": "/tmp",
+      "type": "shell"
+    }
+```
+
+It cleans the image after installation process. I mainly copy it from https://multipass.run/docs/building-multipass-images-with-packerbut made some changes for ubuntu 22.04. I also remove the step of reseting user/group process because it will delete docker group and the final image will fail.
