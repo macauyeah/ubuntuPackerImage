@@ -1,6 +1,14 @@
 # ubuntuPackerImage
 this guide will show you how to install ***packer*** and build an customize ubuntu 22.04 image which could run in ***multipass***.
 
+## tested version
+- packer 1.8.7
+- qemu 6.2.0
+- ubuntu 22.04
+- multipass 1.11.0
+- docker 23.0.4
+
+
 ## install packer in linux without apt-key
 Because ***apt-key*** is deprecated. You cloud try manage the apt sources list.
 
