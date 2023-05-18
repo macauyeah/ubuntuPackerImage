@@ -1,7 +1,16 @@
 # ubuntuPackerImage
+this guide will show you how to install ***packer*** and build an customize ubuntu 22.04 image which could run in ***multipass***.
+
+## tested version
+- packer 1.8.7
+- qemu 6.2.0
+- ubuntu 22.04
+- multipass 1.11.0
+- docker 23.0.4
+
 
 ## install packer in linux without apt-key
-Because apt-key is deprecated. You cloud try manage the apt sources list.
+Because ***apt-key*** is deprecated. You cloud try manage the apt sources list.
 
 ```bash
 curl -fsSL https://apt.releases.hashicorp.com/gpg -o /tmp/hashicorp_gpg.txt
@@ -40,13 +49,16 @@ qemu-system-x86_64  \
   -drive if=virtio,format=raw,file=seed.img
 ```
 
-# build image
+## build image
+The local image only support in bare-metal ubuntu server
 ```
 packer build template.json
 multipass launch file://$PWD/output-qemu/packer-qemu
+# you also can overwrite sources.list by --cloud-init
+multipass launch file://$PWD/output-qemu/packer-qemu --cloud-init ubuntumirror.yaml
 ```
 
-## Notes about current template.json.
+## Notes about current template.json
 Current packer template shows that how to install docker with defualt ubuntu image.
 
 From line 24 to 42.
