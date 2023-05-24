@@ -1,6 +1,7 @@
 # ubuntuPackerImage
 this guide will show you how to install ***packer*** and build an customize ubuntu 22.04 image which could run in ***multipass***.
 
+
 ## tested version
 - packer 1.8.7
 - qemu 6.2.0
@@ -56,6 +57,9 @@ packer build template.json
 multipass launch file://$PWD/output-qemu/packer-qemu
 # you also can overwrite sources.list by --cloud-init
 multipass launch file://$PWD/output-qemu/packer-qemu --cloud-init ubuntumirror.yaml
+
+# rename output file for later use
+mv output-qemu/packer-qemu ./docker.img
 ```
 
 ## Notes about current template.json
@@ -84,7 +88,7 @@ From line 24 to 42.
     },
 ```
 
-It replaces defualt sources.list so that you could change mirror to your specific location. This could help to speedup apt-get update command during docker install process. But your mirror would leave in the image you build.
+It replaces defualt sources.list so that you could change mirror to your specific location. This could help to speedup apt-get update command during docker installing process. But your mirror would be remove during next cloud-init.
 
 From line 43 to 65
 ```
@@ -114,3 +118,9 @@ From line 43 to 65
 ```
 
 It cleans the image after installation process. I mainly copy it from https://multipass.run/docs/building-multipass-images-with-packerbut made some changes for ubuntu 22.04. I also remove the step of reseting user/group process because it will delete docker group and the final image will fail.
+
+
+## Docker cluster
+If your multipass running in a bare metal ubuntu server, you also could config static ip by [other guide](https://github.com/macauyeah/VMDockerNotes/blob/main/MultipassStaticIpEN.md). Then you could initialize docker cluster with [initDockerCluster.sh](initDockerCluster.sh).
+
+If your multipass running in windows or mac, you need to install docker when launching a new instance. You may take a look of [initDockerClusterWithoutStaticIp.sh](initDockerClusterWithoutStaticIp.sh). I did not verify the script very time because of network bandwidth.
