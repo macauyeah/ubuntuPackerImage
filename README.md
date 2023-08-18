@@ -90,7 +90,11 @@ It cleans the image after installation process. I mainly copy it from [https://m
 The original goal of my study is to automatically deploy a docker cluster with multipass. But bad luck, many limitation if you don't run multipass in ubuntu server.
 
 ## Docker cluster
-If your multipass running in ubuntu server, you also could config static ip by [other guide](https://github.com/macauyeah/VMDockerNotes/blob/main/MultipassStaticIpEN.md). Then you could initialize docker cluster with [initDockerCluster.sh](initDockerCluster.sh).
+If your multipass running in ubuntu server, you also could config static ip.
+
+This is the script to install multipass and config static ip interface [setupMultipassWithFixIP.sh](setupMultipassWithFixIP.sh). The details will be explained in [other guide](https://github.com/macauyeah/VMDockerNotes/blob/main/MultipassStaticIpEN.md). 
+
+If you successful build the image, config multipass with static ip, then you could initialize docker cluster with [initDockerCluster.sh](initDockerCluster.sh).
 
 If your multipass running in windows or mac, you need to install docker when launching a new instance. You may take a look of [initDockerClusterWithoutStaticIp.sh](initDockerClusterWithoutStaticIp.sh). I did not verify the script every update because of network bandwidth.
 
