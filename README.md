@@ -2,11 +2,11 @@
 this guide will show you how to install ***packer*** and build an customize ubuntu 22.04 image which could run in ***multipass***.
 
 ## tested version
-- packer 1.9.2
+- packer 1.10.0
 - qemu 6.2.0
 - ubuntu 22.04
-- multipass 1.12.2
-- docker 23.0.5
+- multipass 1.13.0
+- docker 25.0.1
 
 ## install packer in ubuntu 22.04 without apt-key
 Because ***apt-key*** is deprecated. You cloud try manage the apt sources list.
@@ -98,7 +98,7 @@ If you successful build the image, config multipass with static ip, then you cou
 
 If your multipass running in windows or mac, you need to install docker when launching a new instance. You may take a look of [initDockerClusterWithoutStaticIp.sh](initDockerClusterWithoutStaticIp.sh). I did not verify the script every update because of network bandwidth.
 
-If your ubuntu server running in windows hyper-v, you can also expose virtualization to it and you can run mulitpass in it.
+If your ubuntu server running in windows hyper-v, you can also expose virtualization to it and you can run mulitpass in it. Shutdown the vm and type following command with administrator.
 ```powershell
 Set-VMProcessor -VMName YOUR_VM_NAME -ExposeVirtualizationExtensions $true
 ```
