@@ -1,14 +1,25 @@
 # ubuntuPackerImage
-this guide will show you how to install ***packer*** and build an customize ubuntu 22.04 image which could run in ***multipass***.
+this guide will show you how to install ***packer*** and build an customize ubuntu 24.04 image which could run in ***multipass***.
 
 ## tested version
-- packer 1.10.0
-- qemu 6.2.0
-- ubuntu 22.04
-- multipass 1.13.0
-- docker 25.0.1
+- packer 1.10.3 (not officially support on ubuntu 24.04)
+- qemu 8.2.2
+- ubuntu 24.04
+- multipass 1.13.1
+- docker 26.1.0
 
-## install packer in ubuntu 22.04 without apt-key
+## install packer at ubuntu 24.04 with brew
+```bash
+sudo apt-get install build-essential
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# add homebrew to path
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+brew tap hashicorp/tap
+brew install hashicorp/tap/packer
+sudo apt-get install -y qemu-system-x86
+```
+
+## install packer at ubuntu 22.04 without apt-key
 Because ***apt-key*** is deprecated. You cloud try manage the apt sources list.
 
 ```bash
