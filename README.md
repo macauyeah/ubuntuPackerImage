@@ -14,21 +14,6 @@ in ubuntu server
 sudo snap install multipass
 ```
 
-in other linux, install homebrew and install multipass by brew.
-
-[homebrew offical site](https://docs.brew.sh/Homebrew-on-Linux)
-```bash
-# Debian or Ubuntu
-# sudo apt-get install build-essential procps curl file git
-# Fedora, CentOS, or Red Hat
-# sudo yum groupinstall 'Development Tools'
-# sudo yum install procps-ng curl file git
-# Arch Linux
-# sudo pacman -S base-devel procps-ng curl file gi
-# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install multipass
-```
-
 # packer
 ## install packer at ubuntu 24.04 with brew
 ```bash
