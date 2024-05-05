@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# assume that you already built os image with packer build template.json, and rename the output as docker.img
 multipass launch --name node21 
 multipass launch --name node22 
 multipass launch --name node23
