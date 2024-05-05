@@ -52,7 +52,7 @@ build {
 
   provisioner "shell" {
     execute_command = "sudo sh -c '{{ .Vars }} {{ .Path }}'"
-    inline          = ["cp /tmp/sources.list /etc/apt/sources.list"]
+    inline          = ["cp /tmp/sources.list /etc/apt/sources.list.d/ubuntu.sources"]
     remote_folder   = "/tmp"
   }
 
