@@ -1,0 +1,18 @@
+services:
+  http:
+    image: bretfisher/httpenv
+    ports:
+      - 8888:8888
+    deploy:
+      replicas: 3
+      update_config:
+      #  parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    healthcheck:
+      test: curl --fail-with-body localhost:8888 || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 10s
+      timeout: 10s
