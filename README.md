@@ -2,11 +2,11 @@
 this guide will show you how to install ***packer*** and build an customize ubuntu 24.04 image which could run in ***multipass***.
 
 ## tested version
-- packer 1.10.3 (not officially support on ubuntu 24.04)
-- qemu 9.0.0
+- packer 1.11.2
+- qemu 8.2.2
 - ubuntu 24.04
-- multipass 1.13.1
-- docker 26.1.0
+- multipass 1.14.1
+- docker 27.3.1
 
 # multipass
 in ubuntu server
