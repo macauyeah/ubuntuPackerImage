@@ -45,7 +45,7 @@ multipass exec -n ${nodeName[2]} -- sudo docker swarm join --token $managerToken
 workerToken=$(multipass exec -n ${nodeName[0]} -- sudo docker swarm join-token worker -q)
 for ((i=3 ; i < 5 ; i++)) ; do
 	multipass exec -n ${nodeName[i]} -- sudo docker swarm join --token $workerToken ${ip[0]}:2377
-	multipass exec -n ${nodeName[0]} -- sudo docker node update --label-add dmz-worker ${nodeName[i]}
+	multipass exec -n ${nodeName[0]} -- sudo docker node update --label-add zone=dmz ${nodeName[i]}
 done
 
 # for port forwarding

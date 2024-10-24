@@ -1,0 +1,20 @@
+services:
+  dmzhttp:
+    image: bretfisher/httpenv
+    networks:
+      - nginx_default
+      - default
+    #ports:
+    #  - 8889:8888
+    deploy:
+      replicas: 2
+      update_config:
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.zone==dmz
+networks:
+  nginx_default:
+    external: true

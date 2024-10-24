@@ -1,0 +1,11 @@
+services:
+  http-gateway:
+    image: http-gateway
+    ports:
+      - 8080:8080
+    deploy:
+      replicas: 1
+      update_config:
+        delay: 10s
+      restart_policy:
+        condition: on-failure
