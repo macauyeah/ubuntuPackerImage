@@ -2,11 +2,11 @@
 this guide will show you how to install ***packer*** and build an customize ubuntu 24.04 image which could run in ***multipass***.
 
 ## tested version
-- packer 1.11.2
+- packer 1.12.0
 - qemu 8.2.2
 - ubuntu 24.04
 - multipass 1.14.1
-- docker 27.3.1
+- docker 28.0.4
 
 # multipass
 in ubuntu server
@@ -122,3 +122,8 @@ limactl create --name packer-docker lima-packer-docker.yaml
 limactl start packer-docker
 limactl shell packer-docker
 ```
+
+
+docker node update --availability drain node21
+docker node update --availability active node21
+docker node demote node21
