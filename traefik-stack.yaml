@@ -44,3 +44,14 @@ networks:
     name: proxy
     driver: overlay
     attachable: true
+
+# Reference:
+# https://github.com/bluepuma77/traefik-best-practice/blob/main/docker-swarm-traefik/docker-compose.yml
+# if you read offical doc and start with docker example, you might lose some important config and the route will always be error.
+# 1. you need to set --providers.swarm.exposedByDefault=false or else the traefik service will complain of missing port.
+# 2. you need to set --providers.swarm.network=proxy, because the defualt network is null and unable to route.
+# 3. traefik could expose in ingress mode like this example, but you need to requset it by ipv4
+#   - like "curl -v -H 'host:whoami.localhost' http://127.0.0.1/"
+#   - not like "curl -v http://whoami.localhost/"
+# thanks bluepuma77, without his github notes hint, I won't be able to setup traefik POC.
+# he provided a full example of docker swarm. if you need https, you might want to take a look of https://github.com/bluepuma77/traefik-best-practice/blob/main/docker-swarm-traefik/docker-compose.yml
