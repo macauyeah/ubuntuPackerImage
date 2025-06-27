@@ -1,0 +1,46 @@
+services:
+  traefik:
+    image: traefik:v3.4
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        # mode: host
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      #- /var/log:/var/log
+    command:
+      - --api.dashboard=true
+      - --log.level=INFO
+      #- --log.filepath=/var/log/traefik.log
+      - --accesslog=true
+      #- --accesslog.filepath=/var/log/traefik-access.log
+      - --providers.swarm.exposedByDefault=false
+      - --providers.swarm.network=proxy
+      - --entrypoints.web.address=:80
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role==manager
+  whoami:
+    image: traefik/whoami
+    networks:
+      - proxy
+    deploy:
+      replicas: 3
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.whoami.rule=Host(`whoami.localhost`)
+        # other rules reference to https://doc.traefik.io/traefik/routing/routers/#path-pathprefix-and-pathregexp
+        - traefik.http.services.whoami.loadbalancer.server.port=80
+        # test command with curl, ingress seems only work on ipv4
+        # curl -v -H 'host:whoami.localhost' http://127.0.0.1/
+
+networks:
+  proxy:
+    name: proxy
+    driver: overlay
+    attachable: true
