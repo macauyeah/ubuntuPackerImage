@@ -1,0 +1,43 @@
+#cloud-config
+#vim:syntax=yaml
+
+# 添加一个名为alinux的账号，并且可以执行sudo命令。
+users:
+  # - default
+  - name: ubuntu
+    sudo: ['ALL=(ALL)  NOPASSWD:ALL']
+    # plain_text_passwd: aliyun
+    lock_passwd: false
+
+# 添加Alibaba Cloud Linux 3的YUM源。
+yum_repos:
+    alinux3-module:
+        name: alinux3-module
+        baseurl: https://mirrors.aliyun.com/alinux/$releasever/module/$basearch/
+        enabled: 1
+        gpgcheck: 1
+        gpgkey: https://mirrors.aliyun.com/alinux/$releasever/RPM-GPG-KEY-ALINUX-3
+    alinux3-updates:
+        name: alinux3-updates
+        baseurl: https://mirrors.aliyun.com/alinux/$releasever/updates/$basearch/
+        enabled: 1
+        gpgcheck: 1
+        gpgkey: https://mirrors.aliyun.com/alinux/$releasever/RPM-GPG-KEY-ALINUX-3
+    alinux3-plus:
+        name: alinux3-plus
+        baseurl: https://mirrors.aliyun.com/alinux/$releasever/plus/$basearch/
+        enabled: 1
+        gpgcheck: 1
+        gpgkey: https://mirrors.aliyun.com/alinux/$releasever/RPM-GPG-KEY-ALINUX-3
+    alinux3-powertools:
+        name: alinux3-powertools
+        baseurl: https://mirrors.aliyun.com/alinux/$releasever/powertools/$basearch/
+        gpgcheck: 1
+        enabled: 1
+        gpgkey: https://mirrors.aliyun.com/alinux/$releasever/RPM-GPG-KEY-ALINUX-3
+    alinux3-os:
+        name: alinux3-os
+        baseurl: https://mirrors.aliyun.com/alinux/$releasever/os/$basearch/
+        gpgcheck: 1
+        enabled: 1
+        gpgkey: https://mirrors.aliyun.com/alinux/$releasever/RPM-GPG-KEY-ALINUX-3
