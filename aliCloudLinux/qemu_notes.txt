@@ -1,0 +1,69 @@
+qemu-system-x86_64  \
+  -cpu host -machine type=q35,accel=kvm -m 2048 \
+  -nographic \
+  -snapshot \
+  -netdev id=net00,type=user,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net00 \
+  -drive if=virtio,format=qcow2,file=aliyun_3_x64_20G_nocloud_alibase_20251215.qcow2 \
+  -drive if=virtio,format=raw,file=seed.img
+
+
+qemu-img create -f qcow2 -F qcow2 -b aliyun_3_x64_20G_nocloud_alibase_20251215.qcow2 vm_disk.qcow2
+# qemu-img info aliyun_3_x64_20G_nocloud_alibase_20251215.qcow2
+# qemu-img info vm_disk.qcow2
+# vm_disk.qcow2 link to aliyun_3_x64_20G_nocloud_alibase_20251215.qcow2
+# will write the changes to vm_disk.qcow2 because snapshot is skipped
+qemu-system-x86_64  \
+  -cpu host -machine type=q35,accel=kvm -m 2048 \
+  -nographic \
+  -netdev id=net00,type=user,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net00 \
+  -drive if=virtio,format=qcow2,file=vm_disk.qcow2 \
+  -drive if=virtio,format=raw,file=seed.img
+
+qemu-system-x86_64  \
+  -cpu host -machine type=q35,accel=kvm -m 2048 \
+  -nographic \
+  -netdev id=net00,type=user,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net00 \
+  -drive if=virtio,format=qcow2,file=vm_disk.qcow2
+
+qemu-system-x86_64 \
+  -m 2048 -smp 2 \
+  -drive file=vm_disk.qcow2,format=qcow2 \
+  -drive file=seed.img,format=raw \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net0 \
+  -enable-kvm
+
+
+qemu-system-x86_64 \
+  -m 2048 -smp 2 \
+  -drive file=vm_disk.qcow2,format=qcow2 \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net0 \
+  -enable-kvm
+
+qemu-system-x86_64 \
+  -m 2048 -smp 2 \  # 分配內存和CPU核心
+  -drive file=vm_disk.qcow2,format=qcow2 \  # 持久化硬盤
+  -drive file=seed.img,format=raw \  # cloud-init 配置
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \  # 啟用網絡並轉發SSH端口
+  -device virtio-net-pci,netdev=net0 \  # 虛擬網卡
+  -enable-kvm  # 使用KVM加速（如果支持）
+
+
+该引导镜像适用于 alinux3，默认账号 alinux 密码 aliyun  且仅能 console 登录
+
+
+修改host內的.ssh/authorized_keys
+
+
+ssh -o "StrictHostKeyChecking no" alinux@0.0.0.0 -p 2222
+
+ssh -o "StrictHostKeyChecking no" -i ~/.ssh/YOUR_PRIVATE_KEY alinux@0.0.0.0 -p 2222
+
+
+Perhaps Ctrl-a c and system_powerdown
+
+
